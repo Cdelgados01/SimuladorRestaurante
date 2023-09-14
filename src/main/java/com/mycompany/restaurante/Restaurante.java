@@ -11,12 +11,20 @@ public class Restaurante {
     public static void main(String[] args) {
         Conexion.conectarFirebase();
         FirebaseDataManager dataManager = new FirebaseDataManager(Conexion.db);
-        
 
         Scanner scanner = new Scanner(System.in);
         int opcion;
         
+        String nombreCliente = "";
+        
+       
         do {
+        
+            if(nombreCliente.isEmpty()){
+                System.out.println("Ingrese su nombre: ");
+                nombreCliente = scanner.nextLine();
+            }
+        
             // Mostrar el menú
             System.out.println("Menú:");
             System.out.println("1. Sushi");
@@ -29,18 +37,20 @@ public class Restaurante {
             
             opcion = scanner.nextInt(); // Obtener la opción del usuario
             
+            Map<String, Object> datosAgregar = new HashMap<>();
+            datosAgregar.put("cliente", nombreCliente);
+            
             switch (opcion) {
                 case 1:
                     // Menu 2
-                    Map<String, Object> datosAgregar = new HashMap<>();
                     datosAgregar.put("comida", "Sushi");
                     datosAgregar.put("precio", 12000);
+                    System.out.println("Ingrese el nombre del cliente: ");
                     dataManager.agregarDatos("miColeccion", "miDocumento", datosAgregar);
                     System.out.println("Datos agregados exitosamente.");
                     break;
                 case 2:
                     // Menu 2
-                    Map<String, Object> datosAgregar = new HashMap<>();
                     datosAgregar.put("comida", "Hamburguesa");
                     datosAgregar.put("precio", 10000);
                     dataManager.agregarDatos("miColeccion", "miDocumento", datosAgregar);
@@ -48,7 +58,6 @@ public class Restaurante {
                     break;
                 case 3:
                     // Menu 2
-                    Map<String, Object> datosAgregar = new HashMap<>();
                     datosAgregar.put("comida", "Pizza");
                     datosAgregar.put("precio", 4000);
                     dataManager.agregarDatos("miColeccion", "miDocumento", datosAgregar);
